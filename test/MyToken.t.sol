@@ -8,22 +8,29 @@ contract MyTokenTest is Test {
     address admin = address(1);
     address user = address(2);
 
-    function setUp() public { token = new MyToken(admin, admin, admin); }
+    function setUp() public {
+        token = new MyToken(admin, admin, admin);
+    }
 
     function test_AdminCanMint() public {
-        vm.prank(admin); token.mint(user, 100);
+        vm.prank(admin);
+        token.mint(user, 100);
         assertEq(token.balanceOf(user), 100);
     }
 
     function test_RevertWhen_NonMinterMints() public {
-        vm.prank(user); vm.expectRevert();
+        vm.prank(user);
+        vm.expectRevert();
         token.mint(user, 100);
     }
 
     function test_PauseBlocksTransfers() public {
-        vm.prank(admin); token.mint(user, 100);
-        vm.prank(admin); token.pause();
-        vm.prank(user); vm.expectRevert();
+        vm.prank(admin);
+        token.mint(user, 100);
+        vm.prank(admin);
+        token.pause();
+        vm.prank(user);
+        vm.expectRevert();
         token.transfer(admin, 10);
     }
 }

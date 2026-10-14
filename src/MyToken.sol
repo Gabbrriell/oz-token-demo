@@ -11,10 +11,7 @@ contract MyToken is ERC20, ERC20Pausable, AccessControl, ERC20Permit {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor(address defaultAdmin, address pauser, address minter)
-        ERC20("MyToken", "MTK")
-        ERC20Permit("MyToken")
-    {
+    constructor(address defaultAdmin, address pauser, address minter) ERC20("MyToken", "MTK") ERC20Permit("MyToken") {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(PAUSER_ROLE, pauser);
         _grantRole(MINTER_ROLE, minter);
@@ -34,10 +31,7 @@ contract MyToken is ERC20, ERC20Pausable, AccessControl, ERC20Permit {
 
     // The following functions are overrides required by Solidity.
 
-    function _update(address from, address to, uint256 value)
-        internal
-        override(ERC20, ERC20Pausable)
-    {
+    function _update(address from, address to, uint256 value) internal override(ERC20, ERC20Pausable) {
         super._update(from, to, value);
     }
 }
